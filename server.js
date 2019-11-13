@@ -8,20 +8,8 @@ const PRIVATE_VAPID = 'hE5xhj7at5vKliWRGiV28hothLtCg1uYfBQcGFcoXNc';
 
 const fakeDatabase = [];
 const app = express();
-const allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-        res.send(200);
-    } else {
-        next();
-    }
-};
 app.use(cors());
-app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
 webpush.setVapidDetails('mailto:monyou@abv.bg', PUBLIC_VAPID, PRIVATE_VAPID);
@@ -59,7 +47,7 @@ app.post('/SendPushNotification', (err, req, res) => {
         )
     })
 
-    Promise.all(promises).then(() => res.send('OK'));
+    Promise.all(promises).then(() => console.log(res));
 });
 
 app.listen(process.env.PORT || 5000, () => {
