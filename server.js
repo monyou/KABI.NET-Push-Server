@@ -20,6 +20,7 @@ const allowCrossDomain = function (req, res, next) {
         next();
     }
 };
+app.use(cors());
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
@@ -58,9 +59,9 @@ app.post('/SendPushNotification', (err, req, res) => {
         )
     })
 
-    Promise.all(promises).then(() => res.sendStatus(200));
+    Promise.all(promises).then(() => res.send('OK'));
 });
 
-app.listen(3000, () => {
-    console.log('Push notifications server started on port 8630!');
+app.listen(3011, () => {
+    console.log('Push notifications server started on port 3011!');
 })
