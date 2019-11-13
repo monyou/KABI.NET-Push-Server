@@ -25,7 +25,7 @@ app.post('/AddSubscription', (req, res) => {
     fakeDatabase.push(subscription)
 });
 
-app.post('/SendPushNotification', (req, res) => {
+app.post('/SendPushNotification', (err, req, res) => {
     const notificationPayload = {
         notification: {
             title: "KABI.NET Laundry Status",
@@ -53,7 +53,7 @@ app.post('/SendPushNotification', (req, res) => {
         )
     })
 
-    Promise.all(promises).then(() => res.sendStatus(200))
+    Promise.all(promises).then(() => console.error(res)).catch(err => console.error(err));
 });
 
 app.listen(8769, () => {
