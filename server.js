@@ -59,7 +59,7 @@ app.post('/SendPushNotification', (err, req, res) => {
         )
     })
 
-    Promise.all(promises).then(() => res.send('OK'));
+    promises[0].then(() => res.send('OK'));
 });
 
 app.listen(3011, () => {
