@@ -14,12 +14,18 @@ app.use(bodyParser.json());
 
 webpush.setVapidDetails('mailto:monyou@abv.bg', PUBLIC_VAPID, PRIVATE_VAPID);
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.post('/AddSubscription', (req, res) => {
     const subscription = req.body
     fakeDatabase.push(subscription)
 });
 
-app.post('/SendPushNotification', cors(), (req, res) => {
+app.post('/SendPushNotification', (req, res) => {
     const notificationPayload = {
         notification: {
             title: "KABI.NET Laundry Status",
