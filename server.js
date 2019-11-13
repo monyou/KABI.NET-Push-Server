@@ -61,6 +61,6 @@ app.post('/SendPushNotification', (err, req, res) => {
     Promise.all(promises).then(() => res.sendStatus(200));
 });
 
-app.listen(8769, () => {
+app.listen(3000, () => {
     console.log('Push notifications server started on port 8630!');
 })
