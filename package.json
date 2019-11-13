@@ -1,0 +1,13 @@
+{
+  "name": "kabinet-push-notification",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.15.3"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "web-push": "3.4.1"
+  }
+}
