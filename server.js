@@ -16,7 +16,9 @@ webpush.setVapidDetails('mailto:monyou@abv.bg', PUBLIC_VAPID, PRIVATE_VAPID);
 
 app.post('/AddSubscription', (req, res) => {
     const subscription = req.body;
-    fakeDatabase.push(subscription);
+    if (fakeDatabase.findIndex(s => s.endpoint === subscription.endpoint) === -1) {
+        fakeDatabase.push(subscription);
+    }
 });
 
 app.post('/SendPushNotification', (req, res) => {
@@ -46,9 +48,7 @@ app.post('/SendPushNotification', (req, res) => {
             )
         );
     });
-    fakeDatabase.forEach(sub => {
-        console.log(sub.endpoint);
-    });
+    console.log(`Array length: ${sub.length}`);
 
     Promise.all(promises).then(() => console.log(res)).catch(err => console.log(err));
 });
