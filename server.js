@@ -26,7 +26,7 @@ app.post('/SendPushNotification', (req, res) => {
         notification: {
             title: "KABI.NET Laundry Status",
             body: "The laundry is available now!",
-            // icon: "../../../../../assets/logo/main-logo.png",
+            icon: "./main-logo.png",
             vibrate: [100, 50, 100],
             data: {
                 dateOfArrival: Date.now(),
@@ -50,8 +50,6 @@ app.post('/SendPushNotification', (req, res) => {
     });
 
     Promise.all(allSubsToSendTo).then(() => console.log("Subscription Sent!")).catch(err => console.log("Subscription failed!"));
-
-    return res;
 });
 
 app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
