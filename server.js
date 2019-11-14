@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const PUBLIC_VAPID = 'BClP3jkMffUZv11IBPTzZGWqbgmTbjRO7LauIBh66vdb-zJjY5vvedETpWZ9wmynSUzObo2rrQQZdFBS6qhe-68';
 const PRIVATE_VAPID = 'hE5xhj7at5vKliWRGiV28hothLtCg1uYfBQcGFcoXNc';
 
-const fakeDatabase = [];
+const subsDatabase = [];
 const app = express();
 
 app.use(cors());
@@ -16,10 +16,9 @@ webpush.setVapidDetails('mailto:monyou@abv.bg', PUBLIC_VAPID, PRIVATE_VAPID);
 
 app.post('/AddSubscription', (req, res) => {
     const subscription = req.body;
-    if (fakeDatabase.findIndex(s => s.endpoint === subscription.endpoint) === -1) {
-        fakeDatabase.push(subscription);
+    if (subsDatabase.findIndex(s => s.endpoint === subscription.endpoint) === -1) {
+        subsDatabase.push(subscription);
     }
-    return res;
 });
 
 app.post('/SendPushNotification', (req, res) => {
@@ -27,11 +26,11 @@ app.post('/SendPushNotification', (req, res) => {
         notification: {
             title: "KABI.NET Laundry Status",
             body: "The laundry is available now!",
-            icon: "../../../../../assets/logo/main-logo.png",
-            // vibrate: [100, 50, 100],
+            // icon: "../../../../../assets/logo/main-logo.png",
+            vibrate: [100, 50, 100],
             data: {
-                dateOfArrival: Date.now()
-                //   primaryKey: 1
+                dateOfArrival: Date.now(),
+                primaryKey: 1
             },
             actions: [{
                 action: "explore",
@@ -40,9 +39,9 @@ app.post('/SendPushNotification', (req, res) => {
         }
     };
 
-    const promises = [];
-    fakeDatabase.forEach(subscription => {
-        promises.push(
+    const allSubsToSendTo = [];
+    subsDatabase.forEach(subscription => {
+        allSubsToSendTo.push(
             webpush.sendNotification(
                 subscription,
                 JSON.stringify(notificationPayload)
@@ -50,7 +49,7 @@ app.post('/SendPushNotification', (req, res) => {
         );
     });
 
-    Promise.all(promises).then(() => console.log("Subscription Sent!")).catch(err => console.log("Subscription failed!"));
+    Promise.all(allSubsToSendTo).then(() => console.log("Subscription Sent!")).catch(err => console.log("Subscription failed!"));
 
     return res;
 });
