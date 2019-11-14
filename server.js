@@ -15,11 +15,11 @@ app.use(bodyParser.json());
 webpush.setVapidDetails('mailto:monyou@abv.bg', PUBLIC_VAPID, PRIVATE_VAPID);
 
 app.post('/AddSubscription', (req, res) => {
-    const subscription = req.body
-    fakeDatabase.push(subscription)
+    const subscription = req.body;
+    fakeDatabase.push(subscription);
 });
 
-app.post('/SendPushNotification', (err, req, res) => {
+app.post('/SendPushNotification', (req, res) => {
     const notificationPayload = {
         notification: {
             title: "KABI.NET Laundry Status",
@@ -45,12 +45,12 @@ app.post('/SendPushNotification', (err, req, res) => {
                 subscription,
                 JSON.stringify(notificationPayload)
             )
-        )
-    })
+        );
+    });
     console.log('after promises');
     console.log(promises.length);
 
-    Promise.all(promises).then(() => console.log(res));
+    Promise.all(promises).then(() => console.log(res)).catch(err => console.log(err));
 });
 
 app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
