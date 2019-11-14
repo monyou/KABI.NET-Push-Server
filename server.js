@@ -26,7 +26,7 @@ app.post('/SendPushNotification', (req, res) => {
         notification: {
             title: "KABI.NET Laundry Status",
             body: "The laundry is available now!",
-            icon: "./main-logo.png",
+            icon: "../../../../../assets/logo/main-logo.png",
             vibrate: [100, 50, 100],
             data: {
                 dateOfArrival: Date.now(),
