@@ -36,6 +36,7 @@ app.post('/SendPushNotification', (err, req, res) => {
             // }]
         }
     };
+    console.log('before promises');
 
     const promises = [];
     fakeDatabase.forEach(subscription => {
@@ -46,6 +47,8 @@ app.post('/SendPushNotification', (err, req, res) => {
             )
         )
     })
+    console.log('after promises');
+    console.log(promises.length);
 
     Promise.all(promises).then(() => console.log(res));
 });
