@@ -19,6 +19,7 @@ app.post('/AddSubscription', (req, res) => {
     if (fakeDatabase.findIndex(s => s.endpoint === subscription.endpoint) === -1) {
         fakeDatabase.push(subscription);
     }
+    return res;
 });
 
 app.post('/SendPushNotification', (req, res) => {
@@ -27,15 +28,15 @@ app.post('/SendPushNotification', (req, res) => {
             title: "KABI.NET Laundry Status",
             body: "The laundry is available now!",
             icon: "../../../../../assets/logo/main-logo.png",
-            vibrate: [100, 50, 100]
-            // data: {
-            //   dateOfArrival: Date.now(),
-            //   primaryKey: 1
-            // },
-            // actions: [{
-            //   action: "explore",
-            //   title: "Check it out"
-            // }]
+            // vibrate: [100, 50, 100],
+            data: {
+                dateOfArrival: Date.now()
+                //   primaryKey: 1
+            },
+            actions: [{
+                action: "explore",
+                title: "Check it out"
+            }]
         }
     };
 
@@ -48,9 +49,10 @@ app.post('/SendPushNotification', (req, res) => {
             )
         );
     });
-    console.log(`Array length: ${fakeDatabase.length}`);
 
     Promise.all(promises).then(() => console.log("Subscription Sent!")).catch(err => console.log("Subscription failed!"));
+
+    return res;
 });
 
 app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
