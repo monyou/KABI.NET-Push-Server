@@ -48,9 +48,9 @@ app.post('/SendPushNotification', (req, res) => {
             )
         );
     });
-    console.log(`Array length: ${sub.length}`);
+    console.log(`Array length: ${fakeDatabase.length}`);
 
-    Promise.all(promises).then(() => console.log(res)).catch(err => console.log(err));
+    Promise.all(promises).then(() => console.log("Subscription Sent!")).catch(err => console.log("Subscription failed!"));
 });
 
 app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
