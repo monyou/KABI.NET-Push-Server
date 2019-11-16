@@ -20,7 +20,7 @@ app.post('/AddSubscription', (req, res) => {
 app.post('/SendPushNotification', (req, res) => {
     const notificationPayload = req.body.pushPayload;
 
-    webpush.setVapidDetails(req.body.webPushConf.email, req.body.webPushConf.publicVapidKey, req.body.webPushConf.privateVapidKey);
+    webpush.setVapidDetails(`mailto:${req.body.webPushConf.email}`, req.body.webPushConf.publicVapidKey, req.body.webPushConf.privateVapidKey);
 
     const usersToBeSendTo = [];
 
